@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
 
     public float speed = 10;
     public int hp = 150;
     public GameObject explosionEffect;
+    public Slider hpSlider;
+    private int totalHp;
     private Transform[] positions;
     private int index = 0;
 
     private void Start()
     {
         positions = Waypoints.positions;
+        totalHp = hp;
     }
 
     private void Update()
@@ -45,6 +49,7 @@ public class Enemy : MonoBehaviour {
     public void TakeDamage(int damage) {
         if (hp <= 0) return;
         hp -= damage;
+        hpSlider.value = (float)hp / totalHp;
         if (hp <= 0) {
             Die();
         }

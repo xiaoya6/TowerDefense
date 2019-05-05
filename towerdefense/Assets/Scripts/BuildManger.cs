@@ -12,10 +12,15 @@ public class BuildManger : MonoBehaviour {
 
     //表示当前选择的炮台（要建造的炮台）
     private TurrentData selectedTurrentData;
-
+    //表示当前选择的炮台(场景中的游戏物体)
+    private GameObject selectTurrentGo;
     public Text moneyText;
     public Animator moneyAnim;
     public int money = 1000;
+
+    public GameObject upgradeCanvas;
+    public Button buttonUpgrade;
+
 
     void ChangeMoney(int change) {
         money += change;
@@ -45,13 +50,17 @@ public class BuildManger : MonoBehaviour {
                             //钱不够
                             moneyAnim.SetTrigger("filker");
                         }
-
                     }
                     else if(mapCube.turrentGo != null)
-                    {
-
-                        //TODO 升级
-
+                    {            
+                        if (mapCube.turrentGo == selectTurrentGo && upgradeCanvas.activeInHierarchy)
+                        {
+                            HideUpgradeUI();
+                        }
+                        else {
+                            ShowUpgradeUI(mapCube.transform.position + new Vector3(0, 3, 0), mapCube.isUpgraded);
+                        }
+                        selectTurrentGo = mapCube.turrentGo;
                     }
                 }
             }
@@ -78,5 +87,24 @@ public class BuildManger : MonoBehaviour {
         {
             selectedTurrentData = standardTurrentData;
         }
+    }
+
+    void ShowUpgradeUI(Vector3 pos,bool isDisableUpgrade) {
+
+        upgradeCanvas.SetActive(true);
+        upgradeCanvas.transform.position = pos;
+        buttonUpgrade.interactable = !isDisableUpgrade;
+    }
+
+    void HideUpgradeUI() {
+        upgradeCanvas.SetActive(false);
+    }
+
+    public void OnUpgradeButtonDown() {
+
+    }
+
+    public void OnDestoryButtonDown() {
+
     }
 }

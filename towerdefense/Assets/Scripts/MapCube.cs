@@ -8,6 +8,8 @@ public class MapCube : MonoBehaviour {
     [HideInInspector]
     public GameObject turrentGo;//保存Cube当前身上的炮台
     public GameObject buildEffect;
+    [HideInInspector]
+    public bool isUpgraded;
     private Renderer render;
 
     private void Start()
@@ -16,7 +18,7 @@ public class MapCube : MonoBehaviour {
     }
 
     public void BuildTurrent(GameObject turrentPrefab) {
-        Debug.Log(turrentPrefab);
+        isUpgraded = false;
         turrentGo = GameObject.Instantiate(turrentPrefab, transform.position, Quaternion.identity);
         GameObject effect = GameObject.Instantiate(buildEffect, transform.position, Quaternion.identity);
         GameObject.Destroy(effect, 1);
